@@ -8,6 +8,6 @@ interface Api {
 
     @GET("movies")
     suspend fun getAllMovies(
-        @Query("page") page: Int?
+        @Query("page") page: Int? = null
     ): Movies
 }

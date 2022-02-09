@@ -1,5 +1,6 @@
 package com.raminabbasiiii.paging3.datasource.db
 
+import androidx.lifecycle.LiveData
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
@@ -11,13 +12,16 @@ import com.raminabbasiiii.paging3.datasource.db.entity.Movie
 interface MovieDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(movies: List<Movie>)
+    suspend fun insertAllMovies(movies: List<Movie>)
+
+    @Query("SELECT * FROM tbl_movie")
+    fun getMovies() : LiveData<List<Movie>>
 
     @Query("SELECT * FROM tbl_movie")
     fun getAllMovie() : PagingSource<Int, Movie>
 
     @Query("DELETE FROM tbl_movie")
-    suspend fun clearAll()
+    suspend fun deleteAllMovies()
 
     @Query("SELECT COUNT(id) from tbl_movie")
     suspend fun count(): Int

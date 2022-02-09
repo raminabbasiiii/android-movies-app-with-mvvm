@@ -1,4 +1,4 @@
-package com.raminabbasiiii.paging3.repository.remotemediator
+package com.raminabbasiiii.paging3.repository.inDb
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
@@ -56,20 +56,20 @@ constructor(
             database.withTransaction {
 
                 if (loadType == LoadType.REFRESH) {
-                    database.movieDao().clearAll()
-                    database.remoteKeyDao().clearAll()
+                    database.movieDao().deleteAllMovies()
+                   database.remoteKeyDao().deleteAllKeys()
                 }
 
                 val nextKey = page + 1
 
-                database.remoteKeyDao().insertKey(
+               database.remoteKeyDao().insertKey(
                     RemoteKey(
                         0,
                         nextKey = nextKey,
                         isEndReached = endOfPaginationReached
                     )
                 )
-                database.movieDao().insertAll(movieList)
+                database.movieDao().insertAllMovies(movieList)
             }
             return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
         } catch (e: IOException) {
