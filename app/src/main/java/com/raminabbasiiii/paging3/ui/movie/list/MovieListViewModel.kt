@@ -1,15 +1,15 @@
-package com.raminabbasiiii.paging3.ui
+package com.raminabbasiiii.paging3.ui.movie.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.cachedIn
-import com.raminabbasiiii.paging3.repository.inMemory.InMemoryRepository
+import com.raminabbasiiii.paging3.repository.InMemoryRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel
+class MovieListViewModel
 @Inject
 constructor(
     private val repository: InMemoryRepository
@@ -17,11 +17,4 @@ constructor(
 
     @ExperimentalPagingApi
     val movies = repository.getAllMovies().cachedIn(viewModelScope)
-
-    /*@ExperimentalPagingApi
-    fun observeMovies(): Flow<PagingData<Movie>> {
-        return repository
-            .getAllMovie()
-            .cachedIn(viewModelScope)
-    }*/
 }

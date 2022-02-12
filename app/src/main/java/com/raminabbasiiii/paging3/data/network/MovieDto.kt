@@ -1,7 +1,6 @@
 package com.raminabbasiiii.paging3.data.network
 
 import com.google.gson.annotations.SerializedName
-import com.raminabbasiiii.paging3.data.db.movie.MovieEntity
 import com.raminabbasiiii.paging3.model.Movie
 
 class MovieDto(
@@ -56,17 +55,6 @@ class MovieDto(
             images = images
         )
     }
-
-    fun MovieDto.toMovieEntity(): MovieEntity {
-        return MovieEntity(
-            id = id,
-            title = title,
-            poster = poster,
-            year = year,
-            country = country
-        )
-    }
-
 
 
 

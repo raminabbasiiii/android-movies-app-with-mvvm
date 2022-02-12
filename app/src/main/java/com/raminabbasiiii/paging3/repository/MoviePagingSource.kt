@@ -1,4 +1,4 @@
-package com.raminabbasiiii.paging3.repository.inMemory
+package com.raminabbasiiii.paging3.repository
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState

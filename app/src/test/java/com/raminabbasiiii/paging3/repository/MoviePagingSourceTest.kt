@@ -1,12 +1,13 @@
-package com.raminabbasiiii.paging3.repository.inMemory
+package com.raminabbasiiii.paging3.repository
 
 import androidx.paging.PagingSource.LoadParams.Refresh
 import androidx.paging.PagingSource.LoadResult.Page
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.raminabbasiiii.paging3.MainCoroutinesRule
-import com.raminabbasiiii.paging3.data.db.entity.MovieEntity
 import com.raminabbasiiii.paging3.data.network.Api
+import com.raminabbasiiii.paging3.data.network.MovieDto
 import com.raminabbasiiii.paging3.data.network.responses.MovieListResponse
+import com.raminabbasiiii.paging3.data.network.toMovie
 import com.raminabbasiiii.paging3.model.MetaData
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -35,12 +36,21 @@ class MoviePagingSourceTest {
 
     companion object {
         val apiResponse = MovieListResponse(
-            movies = listOf(
-                MovieEntity(id = 1, title = "title", poster = "poster", year = "year", country = "country"),
-                MovieEntity(id = 2, title = "title", poster = "poster", year = "year", country = "country"),
-                MovieEntity(id = 3, title = "title", poster = "poster", year = "year", country = "country")
+            data = listOf(
+                MovieDto(
+                    id = 1, title = "title", poster = "poster", year = "year", country = "country",
+                    rating = "rating", genres = listOf("one","two","three"),
+                    images = listOf("one","two","three")),
+                MovieDto(
+                    id = 2, title = "title", poster = "poster", year = "year", country = "country",
+                    rating = "rating", genres = listOf("one","two","three"),
+                    images = listOf("one","two","three")),
+                MovieDto(
+                    id = 3, title = "title", poster = "poster", year = "year", country = "country",
+                    rating = "rating", genres = listOf("one","two","three"),
+                    images = listOf("one","two","three"))
             ),
-            meta = MetaData(currentPage = "1", perPage = 10, pageCount = 25, totalCount = 100 )
+            metaData = MetaData(currentPage = "1", perPage = 10, pageCount = 25, totalCount = 100 )
         )
     }
 
@@ -55,8 +65,9 @@ class MoviePagingSourceTest {
         given(api.getAllMovies(any())).willReturn(apiResponse)
         //`when`(api.getAllMovies(any())).thenReturn(apiResponse)
         val expectedResult = Page(
-            data = apiResponse.movies.map {
-                MovieEntity(it.id,it.title,it.poster,it.year,it.country)},
+            data = apiResponse.data.map { it.toMovie()
+                //MovieDto(it.id,it.title,it.poster,it.year,it.country,it.rating,it.genres,it.images)
+                                        },
             prevKey = null,
             nextKey = 2
         )

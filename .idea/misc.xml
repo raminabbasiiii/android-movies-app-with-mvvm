@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Project/AndroidStudioProjects/Paging3/app/src/main/res/drawable/ic_rating.xml" value="0.1405" />
+        <entry key="..\:/Project/AndroidStudioProjects/Paging3/app/src/main/res/layout/activity_main.xml" value="0.209375" />
+        <entry key="..\:/Project/AndroidStudioProjects/Paging3/app/src/main/res/layout/fragment_movie_details.xml" value="0.1953125" />
+        <entry key="..\:/Project/AndroidStudioProjects/Paging3/app/src/main/res/layout/fragment_movie_list.xml" value="0.209375" />
         <entry key="..\:/Project/AndroidStudioProjects/Paging3/app/src/main/res/layout/loading_state_item.xml" value="0.20833333333333334" />
         <entry key="..\:/Project/AndroidStudioProjects/Paging3/app/src/main/res/layout/movie_item.xml" value="0.2037037037037037" />
         <entry key="..\:/Project/AndroidStudioProjects/Paging3/app/src/main/res/layout/movie_loading_state_item.xml" value="0.209375" />

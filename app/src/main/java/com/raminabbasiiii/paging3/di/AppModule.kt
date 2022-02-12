@@ -1,12 +1,9 @@
 package com.raminabbasiiii.paging3.di
 
-import android.app.Application
-import androidx.room.Room
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.raminabbasiiii.paging3.data.db.AppDatabase
 import com.raminabbasiiii.paging3.data.network.Api
-import com.raminabbasiiii.paging3.repository.inMemory.InMemoryRepository
+import com.raminabbasiiii.paging3.repository.InMemoryRepository
 import com.raminabbasiiii.paging3.util.Constants
 import dagger.Module
 import dagger.Provides
@@ -45,35 +42,8 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideAppDatabase(app: Application): AppDatabase {
-        return Room
-            .databaseBuilder(app, AppDatabase::class.java, Constants.DB_NAME)
-            .fallbackToDestructiveMigration()
-            .build()
-    }
-
-    @Singleton
-    @Provides
-    fun provideMovieDao(
-        database: AppDatabase
-    ) = database.movieDao()
-
-    @Singleton
-    @Provides
-    fun provideRemoteKeyDao(
-        database: AppDatabase
-    ) = database.remoteKeyDao()
-
-    /*@Singleton
-    @Provides
-    fun provideInDbRepository(
-        api: Api,
-        database: AppDatabase
-    ) = InDbRepository(api,database) as Repository*/
-
-    @Singleton
-    @Provides
     fun provideInMemoryRepository(
         api: Api
     ) = InMemoryRepository(api)
+
 }

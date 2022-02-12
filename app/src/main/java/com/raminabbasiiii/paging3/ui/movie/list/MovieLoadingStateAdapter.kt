@@ -1,4 +1,4 @@
-package com.raminabbasiiii.paging3.ui
+package com.raminabbasiiii.paging3.ui.movie.list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
