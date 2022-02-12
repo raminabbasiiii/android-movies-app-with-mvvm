@@ -5,10 +5,11 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
-import com.raminabbasiiii.paging3.datasource.db.AppDatabase
-import com.raminabbasiiii.paging3.datasource.db.entity.Movie
-import com.raminabbasiiii.paging3.datasource.db.entity.RemoteKey
-import com.raminabbasiiii.paging3.datasource.network.Api
+import com.raminabbasiiii.paging3.data.db.AppDatabase
+import com.raminabbasiiii.paging3.data.db.movie.MovieEntity
+import com.raminabbasiiii.paging3.data.db.remotekey.RemoteKey
+import com.raminabbasiiii.paging3.data.network.Api
+import com.raminabbasiiii.paging3.data.network.toMovieEntity
 import com.raminabbasiiii.paging3.util.Constants.Companion.STARTING_PAGE_INDEX
 import retrofit2.HttpException
 import java.io.IOException
@@ -20,11 +21,11 @@ class MovieRemoteMediator
 constructor(
     private val api: Api,
     private val database: AppDatabase
-    ): RemoteMediator<Int,Movie>() {
+    ): RemoteMediator<Int, MovieEntity>() {
 
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, Movie>
+        state: PagingState<Int, MovieEntity>
     ): MediatorResult {
         return try {
             val loadKey = when (loadType) {
@@ -48,10 +49,10 @@ constructor(
             val page: Int = loadKey?.nextKey ?: STARTING_PAGE_INDEX
             val response = api.getAllMovies(page)
 
-            val movieList = response.movies
+            val movieList = response.data.map { it.toMovieEntity() }
 
             val endOfPaginationReached =
-                page == response.meta.pageCount
+                page == response.metaData.pageCount
 
             database.withTransaction {
 

@@ -4,12 +4,8 @@ import android.app.Application
 import androidx.room.Room
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.raminabbasiiii.paging3.datasource.db.AppDatabase
-import com.raminabbasiiii.paging3.datasource.db.MovieDao
-import com.raminabbasiiii.paging3.datasource.db.RemoteKeyDao
-import com.raminabbasiiii.paging3.datasource.network.Api
-import com.raminabbasiiii.paging3.repository.MainRepository
-import com.raminabbasiiii.paging3.repository.inDb.InDbRepository
+import com.raminabbasiiii.paging3.data.db.AppDatabase
+import com.raminabbasiiii.paging3.data.network.Api
 import com.raminabbasiiii.paging3.repository.inMemory.InMemoryRepository
 import com.raminabbasiiii.paging3.util.Constants
 import dagger.Module
@@ -68,16 +64,16 @@ object AppModule {
         database: AppDatabase
     ) = database.remoteKeyDao()
 
-    @Singleton
+    /*@Singleton
     @Provides
     fun provideInDbRepository(
         api: Api,
         database: AppDatabase
-    ) = InDbRepository(api,database) as MainRepository
+    ) = InDbRepository(api,database) as Repository*/
 
-    /*@Singleton
+    @Singleton
     @Provides
     fun provideInMemoryRepository(
         api: Api
-    ) = InMemoryRepository(api) as MainRepository*/
+    ) = InMemoryRepository(api)
 }

@@ -1,7 +1,7 @@
 package com.raminabbasiiii.paging3.util
 
 import androidx.recyclerview.widget.DiffUtil
-import com.raminabbasiiii.paging3.datasource.db.entity.Movie
+import com.raminabbasiiii.paging3.model.Movie
 
 object MovieDiffCallback : DiffUtil.ItemCallback<Movie>() {
 

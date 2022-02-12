@@ -1,9 +1,10 @@
-package com.raminabbasiiii.paging3.datasource.db
+package com.raminabbasiiii.paging3.data.db
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.filters.SmallTest
 import com.google.common.truth.Truth.assertThat
-import com.raminabbasiiii.paging3.datasource.db.entity.RemoteKey
+import com.raminabbasiiii.paging3.data.db.remotekey.RemoteKeyDao
+import com.raminabbasiiii.paging3.data.db.remotekey.RemoteKey
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.test.runBlockingTest

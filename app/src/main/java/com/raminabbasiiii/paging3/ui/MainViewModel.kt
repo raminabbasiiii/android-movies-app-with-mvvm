@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.cachedIn
-import com.raminabbasiiii.paging3.repository.MainRepository
+import com.raminabbasiiii.paging3.repository.inMemory.InMemoryRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -12,7 +12,7 @@ import javax.inject.Inject
 class MainViewModel
 @Inject
 constructor(
-    private val repository: MainRepository
+    private val repository: InMemoryRepository
     ): ViewModel(){
 
     @ExperimentalPagingApi

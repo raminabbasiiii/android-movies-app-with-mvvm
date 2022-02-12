@@ -1,10 +1,9 @@
 package com.raminabbasiiii.paging3.repository.inDb
 
 import androidx.paging.*
-import com.raminabbasiiii.paging3.datasource.db.AppDatabase
-import com.raminabbasiiii.paging3.datasource.db.entity.Movie
-import com.raminabbasiiii.paging3.datasource.network.Api
-import com.raminabbasiiii.paging3.repository.MainRepository
+import com.raminabbasiiii.paging3.data.db.AppDatabase
+import com.raminabbasiiii.paging3.data.db.movie.MovieEntity
+import com.raminabbasiiii.paging3.data.network.Api
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -13,12 +12,12 @@ class InDbRepository
 constructor(
     private val api: Api,
     private val database: AppDatabase
-    ) : MainRepository {
+    ) {
 
     private val pagingSourceFactory = { database.movieDao().getAllMovie() }
 
     @ExperimentalPagingApi
-    override fun getAllMovies(): Flow<PagingData<Movie>> {
+    fun getAllMovies(): Flow<PagingData<MovieEntity>> {
         return Pager(
             config = PagingConfig(25),
             remoteMediator = MovieRemoteMediator (api, database),

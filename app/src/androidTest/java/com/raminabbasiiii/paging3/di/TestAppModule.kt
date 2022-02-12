@@ -2,7 +2,7 @@ package com.raminabbasiiii.paging3.di
 
 import android.content.Context
 import androidx.room.Room
-import com.raminabbasiiii.paging3.datasource.db.AppDatabase
+import com.raminabbasiiii.paging3.data.db.AppDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

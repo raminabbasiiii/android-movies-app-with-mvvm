@@ -1,10 +1,9 @@
-package com.raminabbasiiii.paging3.datasource.db
+package com.raminabbasiiii.paging3.data.db.remotekey
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.raminabbasiiii.paging3.datasource.db.entity.RemoteKey
 
 @Dao
 interface RemoteKeyDao {

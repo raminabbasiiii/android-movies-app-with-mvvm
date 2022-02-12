@@ -1,4 +1,4 @@
-package com.raminabbasiiii.paging3.datasource.db.entity
+package com.raminabbasiiii.paging3.data.db.remotekey
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

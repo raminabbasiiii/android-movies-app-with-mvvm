@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.raminabbasiiii.paging3.databinding.MovieItemBinding
-import com.raminabbasiiii.paging3.datasource.db.entity.Movie
+import com.raminabbasiiii.paging3.model.Movie
 import com.raminabbasiiii.paging3.util.MovieDiffCallback
 
 class MovieRecyclerAdapter(private val clicked: (String) -> Unit) :

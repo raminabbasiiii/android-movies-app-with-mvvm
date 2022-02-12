@@ -1,11 +1,10 @@
-package com.raminabbasiiii.paging3.datasource.db
+package com.raminabbasiiii.paging3.data.db
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.room.Room
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.filters.SmallTest
 import com.google.common.truth.Truth.assertThat
-import com.raminabbasiiii.paging3.datasource.db.entity.Movie
+import com.raminabbasiiii.paging3.data.db.movie.MovieDao
+import com.raminabbasiiii.paging3.data.db.entity.MovieEntity
 import com.raminabbasiiii.paging3.getOrAwaitValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -53,36 +52,36 @@ class MovieDaoTest {
     @Test
     fun insertMovieItem() = runBlockingTest {
 
-        val movieItem = Movie(1,"war","url","1995","italy")
-        val movies : List<Movie> = listOf(movieItem)
-        dao.insertAllMovies(movies)
+        val movieEntityItem = MovieEntity(1,"war","url","1995","italy")
+        val movieEntities : List<MovieEntity> = listOf(movieEntityItem)
+        dao.insertAllMovies(movieEntities)
 
         val allMovie = dao.getMovies().getOrAwaitValue()
 
-        assertThat(allMovie).contains(movieItem)
+        assertThat(allMovie).contains(movieEntityItem)
     }
 
     @Test
     fun deleteMovieItem() = runBlockingTest {
-        val movieItem = Movie(1,"war","url","1995","italy")
-        val movies : List<Movie> = listOf(movieItem)
-        dao.insertAllMovies(movies)
+        val movieEntityItem = MovieEntity(1,"war","url","1995","italy")
+        val movieEntities : List<MovieEntity> = listOf(movieEntityItem)
+        dao.insertAllMovies(movieEntities)
         dao.deleteAllMovies()
 
         val allMovie = dao.getMovies().getOrAwaitValue()
 
-        assertThat(allMovie).doesNotContain(movieItem)
+        assertThat(allMovie).doesNotContain(movieEntityItem)
 
     }
 
     @Test
     fun countMovieItemId() = runBlockingTest {
-        val movieItem1 = Movie(1,"war","url","1995","italy")
-        val movieItem2 = Movie(2,"war","url","1995","italy")
-        val movieItem3 = Movie(3,"war","url","1995","italy")
-        val movieItem4 = Movie(4,"war","url","1995","italy")
-        val movies : List<Movie> = listOf(movieItem1,movieItem2,movieItem3,movieItem4)
-        dao.insertAllMovies(movies)
+        val movieEntityItem1 = MovieEntity(1,"war","url","1995","italy")
+        val movieEntityItem2 = MovieEntity(2,"war","url","1995","italy")
+        val movieEntityItem3 = MovieEntity(3,"war","url","1995","italy")
+        val movieEntityItem4 = MovieEntity(4,"war","url","1995","italy")
+        val movieEntities : List<MovieEntity> = listOf(movieEntityItem1,movieEntityItem2,movieEntityItem3,movieEntityItem4)
+        dao.insertAllMovies(movieEntities)
 
         val allId = dao.count()
 
