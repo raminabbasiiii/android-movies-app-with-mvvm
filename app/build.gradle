@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
@@ -84,7 +85,7 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
 
     //--Hilt
-    def hilt_version = '2.40.5'
+    def hilt_version = '2.39.1'
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 
@@ -117,6 +118,7 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
     implementation "androidx.navigation:navigation-runtime-ktx:$nav_version"
+    androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
 
     //--Swipe Refresh
     def swipe_version = "1.1.0"
@@ -125,8 +127,12 @@ dependencies {
     //--Glide
     def glide_version = "4.12.0"
     implementation "com.github.bumptech.glide:glide:$glide_version"
-    annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
+    kapt "com.github.bumptech.glide:compiler:$glide_version"
+
+    //--Image Slider
+    implementation 'com.github.denzcoskun:ImageSlideshow:0.1.0'
+
 }
 kapt {
-    correctErrorTypes  true
+    correctErrorTypes = true
 }

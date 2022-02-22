@@ -31,7 +31,6 @@ constructor(
             val page = params.key ?: 1
 
             val response = api.getAllMovies(page).data.map { it.toMovie() }
-
             Page (
                 data = response,
                 prevKey = null,

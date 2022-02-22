@@ -3,7 +3,8 @@ package com.raminabbasiiii.paging3.di
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.raminabbasiiii.paging3.data.network.Api
-import com.raminabbasiiii.paging3.repository.InMemoryRepository
+import com.raminabbasiiii.paging3.repository.MovieRepository
+import com.raminabbasiiii.paging3.repository.MovieRepositoryImpl
 import com.raminabbasiiii.paging3.util.Constants
 import dagger.Module
 import dagger.Provides
@@ -42,8 +43,16 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideInMemoryRepository(
+    fun provideMovieRepository(
         api: Api
-    ) = InMemoryRepository(api)
+    ) = MovieRepositoryImpl(api) as MovieRepository
+
+    /*@Singleton
+    @Provides
+    fun provideMovieRepository(
+        api: Api
+    ): MovieRepository{
+        return MovieRepositoryImpl(api)
+    }*/
 
 }

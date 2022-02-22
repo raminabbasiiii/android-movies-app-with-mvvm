@@ -18,7 +18,7 @@ class MovieRecyclerAdapter
 @Inject
 constructor(
     @ApplicationContext val context: Context,
-    private val clicked: (String) -> Unit
+    private val clicked: (Int) -> Unit
     ): PagingDataAdapter<Movie, MovieRecyclerAdapter.MovieViewHolder>(
         MovieDiffCallback
     ) {
@@ -53,7 +53,7 @@ constructor(
                 .into(binding.poster)
 
             binding.root.setOnClickListener {
-                data?.title?.let { it1 -> clicked.invoke(it1) }
+                data?.id?.let { id -> clicked.invoke(id) }
             }
 
         }

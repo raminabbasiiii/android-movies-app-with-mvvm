@@ -2,6 +2,7 @@ package com.raminabbasiiii.paging3.data.network
 
 import com.google.gson.annotations.SerializedName
 import com.raminabbasiiii.paging3.model.Movie
+import com.raminabbasiiii.paging3.model.MovieDetails
 
 class MovieDto(
 
@@ -23,6 +24,33 @@ class MovieDto(
     @SerializedName("imdb_rating")
     val rating: String,
 
+    @SerializedName("rated")
+    val rated: String,
+
+    @SerializedName("released")
+    val released: String,
+
+    @SerializedName("runtime")
+    val runtime: String,
+
+    @SerializedName("director")
+    val director: String,
+
+    @SerializedName("writer")
+    val writer: String,
+
+    @SerializedName("actors")
+    val actors: String,
+
+    @SerializedName("plot")
+    val plot: String,
+
+    @SerializedName("awards")
+    val awards: String,
+
+    @SerializedName("imdb_votes")
+    val votes: String,
+
     @SerializedName("genres")
     val genres: List<String>? = null,
 
@@ -43,14 +71,23 @@ class MovieDto(
         )
     }
 
-    fun Movie.toMovieDto(): MovieDto {
-        return MovieDto(
+    fun MovieDto.toMovieDetails(): MovieDetails {
+        return MovieDetails(
             id = id,
             title = title,
             poster = poster,
             year = year,
             country = country,
             rating = rating,
+            rated = rated,
+            released = released,
+            runtime = runtime,
+            director = director,
+            writer = writer,
+            actors = actors,
+            plot = plot,
+            awards = awards,
+            votes = votes,
             genres = genres,
             images = images
         )

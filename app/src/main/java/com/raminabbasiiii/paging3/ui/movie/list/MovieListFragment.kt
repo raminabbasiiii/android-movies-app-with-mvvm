@@ -1,32 +1,35 @@
 package com.raminabbasiiii.paging3.ui.movie.list
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.raminabbasiiii.paging3.databinding.FragmentMovieListBinding
+import com.raminabbasiiii.paging3.util.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.distinctUntilChangedBy
-import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.*
 
 @ExperimentalCoroutinesApi
+@ExperimentalPagingApi
 @AndroidEntryPoint
 class MovieListFragment : Fragment() {
 
     private val viewModel: MovieListViewModel by viewModels()
     private lateinit var binding: FragmentMovieListBinding
-    private lateinit var adapter : MovieRecyclerAdapter
+    private lateinit var recyclerAdapter : MovieRecyclerAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,14 +37,48 @@ class MovieListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMovieListBinding.inflate(layoutInflater)
+        Log.i("baso", "onCreateView: ")
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initAdapter()
-        initSwipeToRefresh()
+        initRecyclerView()
+        subscribeObservers()
+        retry()
+
+        Log.i("baso", "onViewCreated: ")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.i("baso", "onResume: ")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.i("baso", "onPause: ")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.i("baso", "onStop: ")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.i("baso", "onDestroyView: ")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.i("baso", "onDestroy: ")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        Log.i("baso", "onDetach: ")
     }
 
     private fun snackBarClickedMovie(title: String) {
@@ -50,34 +87,51 @@ class MovieListFragment : Fragment() {
             .show()
     }
 
-    @OptIn(ExperimentalPagingApi::class)
-    private fun initAdapter() {
-        adapter = MovieRecyclerAdapter(requireContext()) { title: String -> snackBarClickedMovie(title) }
+    private fun initRecyclerView() {
+
         binding.movieRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
+            recyclerAdapter =
+                MovieRecyclerAdapter(requireContext()) { movieId: Int ->
+                    findNavController().navigate(
+                        MovieListFragmentDirections
+                            .actionMovieListFragmentToMovieDetailsFragment(movieId = movieId )
+                    )
+                        //title: String -> snackBarClickedMovie(title)
+                }
+
+            /*addOnScrollListener(object : RecyclerView.OnScrollListener(){
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+
+                    val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                    val lastPosition = layoutManager.findLastVisibleItemPosition()
+                    viewModel.onChangeMovieScrollPosition(lastPosition)
+                    val page = lastPosition / 10
+                    viewModel.setPage(page)
+                }
+            })*/
+
+            adapter = recyclerAdapter
+
         }
 
-        binding.movieRecyclerView.adapter = adapter.withLoadStateFooter(
-            footer = MovieLoadingStateAdapter(adapter::retry)
+        binding.movieRecyclerView.adapter = recyclerAdapter.withLoadStateFooter(
+            footer = MovieLoadingStateAdapter(recyclerAdapter::retry)
         )
 
-        /*lifecycleScope.launchWhenCreated {
-            adapter.loadStateFlow.collect { loadStates ->
-                binding.swipeRefreshLayout.isRefreshing = loadStates.source?.refresh is LoadState.Loading
-            }
-        }*/
-
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            adapter.addLoadStateListener { loadState ->
+            recyclerAdapter.addLoadStateListener { loadState ->
                 if (loadState.source.refresh is LoadState.Loading) {
-                    if (adapter.snapshot().isEmpty()) {
+
+                    if (recyclerAdapter.snapshot().isEmpty()) {
                         binding.progressBar.isVisible = true
                     }
                     binding.txtError.isVisible = false
+                    binding.btnRetry.isVisible = false
                 } else {
                     binding.progressBar.isVisible = false
-                    binding.swipeRefreshLayout.isRefreshing = false
 
                     val error = when {
                         loadState.source.prepend is LoadState.Error -> loadState.source.prepend as LoadState.Error
@@ -86,9 +140,10 @@ class MovieListFragment : Fragment() {
                         else -> null
                     }
                     error?.let {
-                        if (adapter.snapshot().isEmpty()) {
+                        if (recyclerAdapter.snapshot().isEmpty()) {
                             binding.txtError.isVisible = true
-                            binding.txtError.text = it.error.localizedMessage
+                            binding.btnRetry.isVisible = true
+                            binding.txtError.text = "Check Network Connection!"
                         }
                     }
                 }
@@ -96,22 +151,26 @@ class MovieListFragment : Fragment() {
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.movies.collectLatest {
-                adapter.submitData(it)
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            adapter.loadStateFlow
-                .distinctUntilChangedBy { it.refresh }
+            recyclerAdapter.loadStateFlow
+            .distinctUntilChangedBy { it.refresh }
                 .filter { it.refresh is LoadState.NotLoading }
-                .collect { binding.movieRecyclerView.scrollToPosition(0) }
+                //.collect { binding.movieRecyclerView.scrollToPosition(0) }
         }
     }
 
-    private fun initSwipeToRefresh() {
-        binding.swipeRefreshLayout.setOnRefreshListener { adapter.refresh() }
+    private fun subscribeObservers() {
+        viewModel.movies.observe(viewLifecycleOwner){
+            recyclerAdapter.submitData(lifecycle,it)
+        }
+        /*viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+            viewModel.movies.collectLatest {
+                recyclerAdapter.submitData(it)
+            }
+        }*/
     }
 
+    private fun retry() {
+        binding.btnRetry.setOnClickListener { recyclerAdapter.retry() }
+    }
 
 }
