@@ -6,10 +6,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="80dp"
+        android:layout_height="120dp"
         android:id="@+id/poster"
-        android:layout_margin="8dp"
+        android:layout_margin="16dp"
+        android:background="@color/teal_200"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,9 +22,9 @@
         android:layout_height="wrap_content"
         android:textSize="16sp"
         android:layout_marginTop="8dp"
-        android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:textStyle="bold"
+        android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@id/poster"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,22 +41,22 @@
         app:layout_constraintStart_toEndOf="@id/poster"
         app:layout_constraintTop_toBottomOf="@+id/title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/year"/>
+        app:layout_constraintBottom_toTopOf="@+id/rating"/>
 
     <TextView
-        android:id="@+id/year"
+        android:id="@+id/rating"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:textAlignment="textStart"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/poster"
-        app:layout_constraintTop_toBottomOf="@+id/country" />
-
-
+        app:layout_constraintTop_toBottomOf="@+id/country"
+        app:drawableStartCompat="@drawable/ic_rating" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

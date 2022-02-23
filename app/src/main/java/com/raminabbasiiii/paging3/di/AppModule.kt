@@ -6,7 +6,8 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.raminabbasiiii.paging3.data.db.AppDatabase
 import com.raminabbasiiii.paging3.data.network.Api
-import com.raminabbasiiii.paging3.repository.inMemory.InMemoryRepository
+import com.raminabbasiiii.paging3.repository.MovieRepository
+import com.raminabbasiiii.paging3.repository.MovieRepositoryImpl
 import com.raminabbasiiii.paging3.util.Constants
 import dagger.Module
 import dagger.Provides
@@ -64,16 +65,10 @@ object AppModule {
         database: AppDatabase
     ) = database.remoteKeyDao()
 
-    /*@Singleton
-    @Provides
-    fun provideInDbRepository(
-        api: Api,
-        database: AppDatabase
-    ) = InDbRepository(api,database) as Repository*/
-
     @Singleton
     @Provides
-    fun provideInMemoryRepository(
-        api: Api
-    ) = InMemoryRepository(api)
+    fun provideMovieRepository(
+        api: Api,
+        database: AppDatabase
+    ) = MovieRepositoryImpl(api,database) as MovieRepository
 }

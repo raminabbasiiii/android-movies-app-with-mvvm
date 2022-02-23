@@ -1,4 +1,4 @@
-package com.raminabbasiiii.paging3.ui
+package com.raminabbasiiii.paging3.ui.movie.list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -31,7 +31,7 @@ class MovieLoadingStateAdapter(private val retry: () -> Unit) :
         ) {
 
         private val binding = MovieLoadingStateItemBinding.bind(itemView)
-        private val retry: Button = binding.retryButton
+        private val retry: Button = binding.btnRetry
             .also {
                 it.setOnClickListener { retry() }
             }
@@ -39,11 +39,11 @@ class MovieLoadingStateAdapter(private val retry: () -> Unit) :
             fun bind(loadState: LoadState) {
 
                 if (loadState is LoadState.Error) {
-                    binding.errorMsg.text = loadState.error.localizedMessage
+                    binding.txtError.text = "Check Network Connection!"
                 }
                 binding.progressBar.isVisible = loadState is LoadState.Loading
-                binding.retryButton.isVisible = loadState is LoadState.Error
-                binding.errorMsg.isVisible = loadState is LoadState.Error
+                binding.btnRetry.isVisible = loadState is LoadState.Error
+                binding.txtError.isVisible = loadState is LoadState.Error
             }
         }
 }

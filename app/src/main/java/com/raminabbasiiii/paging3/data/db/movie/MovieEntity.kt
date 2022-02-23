@@ -3,8 +3,6 @@ package com.raminabbasiiii.paging3.data.db.movie
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.raminabbasiiii.paging3.data.network.MovieDto
-import com.raminabbasiiii.paging3.model.Movie
 
 @Entity(tableName = "tbl_movie")
 data class MovieEntity(
@@ -23,6 +21,14 @@ data class MovieEntity(
     val year: String,
 
     @ColumnInfo(name = "country")
-    val country: String
+    val country: String,
 
+    @ColumnInfo(name = "rating")
+    val rating: String,
+
+    @ColumnInfo(name = "genres")
+    val genres: List<String>? = null,
+
+    @ColumnInfo(name = "images")
+    val images: List<String>? = null
 )

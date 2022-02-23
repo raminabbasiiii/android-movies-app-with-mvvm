@@ -1,4 +1,4 @@
-package com.raminabbasiiii.paging3.repository.inDb
+package com.raminabbasiiii.paging3.repository
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType

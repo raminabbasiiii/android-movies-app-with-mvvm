@@ -2,6 +2,7 @@ package com.raminabbasiiii.paging3.data.network
 
 import com.raminabbasiiii.paging3.data.network.responses.MovieListResponse
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface Api {
@@ -15,4 +16,9 @@ interface Api {
     suspend fun searchMovies(
         @Query("q") name: String
     ): MovieListResponse
+
+    @GET("movies/{movie_id}")
+    suspend fun getMovieDetails(
+        @Path("movie_id") movieId: Int
+    ): MovieDto
 }

@@ -1,17 +1,25 @@
-package com.raminabbasiiii.paging3.ui
+package com.raminabbasiiii.paging3.ui.movie.list
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.raminabbasiiii.paging3.data.db.movie.MovieEntity
 import com.raminabbasiiii.paging3.databinding.MovieItemBinding
-import com.raminabbasiiii.paging3.model.Movie
 import com.raminabbasiiii.paging3.util.MovieDiffCallback
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
-class MovieRecyclerAdapter(private val clicked: (String) -> Unit) :
-    PagingDataAdapter<Movie, MovieRecyclerAdapter.MovieViewHolder>(
+class MovieRecyclerAdapter
+@Inject
+constructor(
+    @ApplicationContext val context: Context,
+    private val clicked: (Int) -> Unit
+    ): PagingDataAdapter<MovieEntity, MovieRecyclerAdapter.MovieViewHolder>(
         MovieDiffCallback
     ) {
 
@@ -32,21 +40,30 @@ class MovieRecyclerAdapter(private val clicked: (String) -> Unit) :
         private val binding: MovieItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(data: Movie?) {
+        fun bind(data: MovieEntity?) {
             binding.title.text = data?.title
-            binding.year.text = data?.year
+            binding.rating.text = data?.rating
             binding.country.text = data?.country
 
             Glide.with(binding.root)
                 .load(data?.poster)
+                .placeholder(circularProgressBar())
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .fitCenter()
                 .into(binding.poster)
 
             binding.root.setOnClickListener {
-                data?.title?.let { it1 -> clicked.invoke(it1) }
+                data?.id?.let { id -> clicked.invoke(id) }
             }
 
+        }
+
+        private fun circularProgressBar(): CircularProgressDrawable {
+            val circularProgressDrawable = CircularProgressDrawable(context)
+            circularProgressDrawable.strokeWidth = 10f
+            circularProgressDrawable.centerRadius = 40f
+            circularProgressDrawable.start()
+            return circularProgressDrawable
         }
     }
 }
