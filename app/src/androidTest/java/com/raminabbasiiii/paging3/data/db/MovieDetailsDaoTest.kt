@@ -3,8 +3,8 @@ package com.raminabbasiiii.paging3.data.db
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.filters.SmallTest
 import com.google.common.truth.Truth.assertThat
-import com.raminabbasiiii.paging3.data.db.remotekey.RemoteKeyDao
-import com.raminabbasiiii.paging3.data.db.remotekey.RemoteKey
+import com.raminabbasiiii.paging3.data.db.moviedetails.MovieDetailsDao
+import com.raminabbasiiii.paging3.data.db.moviedetails.MovieDetailsEntity
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -19,10 +19,10 @@ import javax.inject.Named
 @ExperimentalCoroutinesApi
 @SmallTest
 @HiltAndroidTest
-class RemoteKeyDaoTest {
+class MovieDetailsDaoTest {
 
     @get:Rule
-    var hiltRule = HiltAndroidRule(this)
+    val hiltRule = HiltAndroidRule(this)
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -30,12 +30,12 @@ class RemoteKeyDaoTest {
     @Inject
     @Named("test_db")
     lateinit var database: AppDatabase
-    private lateinit var dao: RemoteKeyDao
+    private lateinit var dao: MovieDetailsDao
 
     @Before
-    fun setup() {
+    fun setup(){
         hiltRule.inject()
-        dao = database.remoteKeyDao()
+        dao = database.movieDetailsDao()
     }
 
     @After
@@ -44,26 +44,23 @@ class RemoteKeyDaoTest {
     }
 
     @Test
-    fun insertKey_return_true() = runBlockingTest {
-        val keyItem = RemoteKey(1,21,true)
-        dao.insertKey(keyItem)
+    fun insertMovieDetails() = runBlockingTest {
+        val movieDetailsItem = MovieDetailsEntity(
+            1,"war","url","1995","italy","rating","rated","released"
+        ,"runtime","director","writer","actors","plot","awards"
+        ,"votes",null,null)
+        dao.insertMovieDetails(movieDetailsItem)
 
-        val allKey = dao.getKeys()
-
-        assertThat(allKey).contains(keyItem)
+        val movieDetails = dao.getMovieDetails(1)
+        assertThat(movieDetails).isEqualTo(movieDetailsItem)
     }
-
-   @Test
-   fun deleteKey_return_true() = runBlockingTest {
-       val keyItem = RemoteKey(1,21,true)
-       dao.insertKey(keyItem)
-       dao.deleteAllKeys()
-
-       val allKey = dao.getKeys()
-
-       assertThat(allKey).doesNotContain(keyItem)
-   }
 }
+
+
+
+
+
+
 
 
 
