@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Paging3</string>
+    <string name="app_name">Movies</string>
     <string name="retry">retry</string>
     <string name="movies">Movies</string>
     <string name="btn_close">close</string>

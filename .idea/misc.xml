@@ -3,12 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Project/AndroidStudioProjects/Movies/app/src/main/res/layout/fragment_movie_details.xml" value="0.19907407407407407" />
+        <entry key="..\:/Project/AndroidStudioProjects/Movies/app/src/main/res/layout/fragment_movie_list.xml" value="0.24259259259259258" />
+        <entry key="..\:/Project/AndroidStudioProjects/Movies/app/src/main/res/layout/movie_item.xml" value="0.209375" />
         <entry key="..\:/Project/AndroidStudioProjects/Paging3/app/src/main/res/drawable/circular_progress_bar.xml" value="0.1405" />
+        <entry key="..\:/Project/AndroidStudioProjects/Paging3/app/src/main/res/drawable/ic_baseline_star_rate_24.xml" value="0.116" />
         <entry key="..\:/Project/AndroidStudioProjects/Paging3/app/src/main/res/drawable/ic_image_load_failed.xml" value="0.1405" />
         <entry key="..\:/Project/AndroidStudioProjects/Paging3/app/src/main/res/drawable/ic_image_loading_failed.xml" value="0.1405" />
         <entry key="..\:/Project/AndroidStudioProjects/Paging3/app/src/main/res/drawable/ic_rating.xml" value="0.1405" />
         <entry key="..\:/Project/AndroidStudioProjects/Paging3/app/src/main/res/layout/activity_main.xml" value="0.209375" />
-        <entry key="..\:/Project/AndroidStudioProjects/Paging3/app/src/main/res/layout/fragment_movie_details.xml" value="0.22" />
+        <entry key="..\:/Project/AndroidStudioProjects/Paging3/app/src/main/res/layout/fragment_movie_details.xml" value="0.1" />
         <entry key="..\:/Project/AndroidStudioProjects/Paging3/app/src/main/res/layout/fragment_movie_list.xml" value="0.1" />
         <entry key="..\:/Project/AndroidStudioProjects/Paging3/app/src/main/res/layout/loading_state_item.xml" value="0.20833333333333334" />
         <entry key="..\:/Project/AndroidStudioProjects/Paging3/app/src/main/res/layout/movie_item.xml" value="0.2037037037037037" />
